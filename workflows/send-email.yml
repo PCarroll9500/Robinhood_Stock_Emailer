@@ -1,0 +1,25 @@
+name: Send Test Email
+
+on:
+  workflow_dispatch:  # allows manual triggering
+  schedule:
+    - cron: "0 14 * * *"  # every day at 14:00 UTC for testing
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
+
+    - name: Run send_email.py
+      env:
+        EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+      run: python send_email.py
