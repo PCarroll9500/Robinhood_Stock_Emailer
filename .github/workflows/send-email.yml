@@ -1,31 +1,23 @@
-name: Send Robinhood Portfolio Email
-
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '30 13 * * 1-5'  # 9:30 AM ET, Monday-Friday (Market Open)
-    - cron: '0 20 * * 1-5'   # 4:00 PM ET, Monday-Friday (Market Close)
-
 jobs:
   send-email:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.x
+      - name: Install dependencies
+        run: pip install matplotlib robin_stocks
 
-    - name: Install dependencies
-      run: pip install matplotlib robin_stocks
-
-    - name: Run script
-      env:
-        EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
-        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-        RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
-        RH_USERNAME: ${{ secrets.RH_USERNAME }}
-        RH_PASSWORD: ${{ secrets.RH_PASSWORD }}
-      run: python send_email.py
+      - name: Run script
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          RH_USERNAME: ${{ secrets.RH_USERNAME }}
+          RH_PASSWORD: ${{ secrets.RH_PASSWORD }}
+        run: python send_email.py
