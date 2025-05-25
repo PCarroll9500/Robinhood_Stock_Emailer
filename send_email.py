@@ -6,11 +6,6 @@ EMAIL = os.environ["EMAIL_ADDRESS"]
 PASSWORD = os.environ["EMAIL_PASSWORD"]
 RECIPIENT = os.environ["RECIPIENT_EMAIL"]
 
-# Debug print (TEMPORARY — remove after testing)
-print("EMAIL:", EMAIL)
-print("PASSWORD:", '*' * len(PASSWORD))  # don't print actual password
-print("RECIPIENT:", RECIPIENT)
-
 msg = EmailMessage()
 msg.set_content("✅ This is a test email from GitHub Actions using secrets.")
 msg["Subject"] = "Test Email"
