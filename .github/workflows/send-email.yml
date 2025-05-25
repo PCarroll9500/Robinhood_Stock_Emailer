@@ -1,3 +1,14 @@
+name: Send Robinhood Portfolio Email
+
+on:
+  push:
+    branches:
+      - main          # Run workflow on pushes to the main branch
+  schedule:
+    - cron: '0 13 * * 1-5'   # Run every weekday at 13:00 UTC (market open approx)
+    - cron: '0 20 * * 1-5'   # Run every weekday at 20:00 UTC (market close approx)
+  workflow_dispatch:          # Allows you to manually trigger the workflow from GitHub UI
+
 jobs:
   send-email:
     runs-on: ubuntu-latest
@@ -7,7 +18,14 @@ jobs:
       
       - name: Set up Python
         uses: actions/setup-python@v4
-        with:
+        with:on:
+  push:
+    branches:
+      - main          # Run workflow on pushes to the main branch
+  schedule:
+    - cron: '0 13 * * 1-5'   # Run every weekday at 13:00 UTC (market open approx)
+    - cron: '0 20 * * 1-5'   # Run every weekday at 20:00 UTC (market close approx)
+  workflow_dispatch:          # Allows you to manually trigger the workflow from GitHub UI
           python-version: 3.x
 
       - name: Install dependencies
