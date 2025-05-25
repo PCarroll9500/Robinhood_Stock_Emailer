@@ -5,27 +5,21 @@ on:
     branches:
       - main          # Run workflow on pushes to the main branch
   schedule:
-    - cron: '0 13 * * 1-5'   # Run every weekday at 13:00 UTC (market open approx)
-    - cron: '0 20 * * 1-5'   # Run every weekday at 20:00 UTC (market close approx)
-  workflow_dispatch:          # Allows you to manually trigger the workflow from GitHub UI
+    - cron: '0 13 * * 1-5'   # Market open (13:00 UTC = 9:00 AM ET)
+    - cron: '0 20 * * 1-5'   # Market close (20:00 UTC = 4:00 PM ET)
+  workflow_dispatch:         # Manual trigger from GitHub UI
 
 jobs:
   send-email:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
       
       - name: Set up Python
         uses: actions/setup-python@v4
-        with:on:
-  push:
-    branches:
-      - main          # Run workflow on pushes to the main branch
-  schedule:
-    - cron: '0 13 * * 1-5'   # Run every weekday at 13:00 UTC (market open approx)
-    - cron: '0 20 * * 1-5'   # Run every weekday at 20:00 UTC (market close approx)
-  workflow_dispatch:          # Allows you to manually trigger the workflow from GitHub UI
+        with:
           python-version: 3.x
 
       - name: Install dependencies
